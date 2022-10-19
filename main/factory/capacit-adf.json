@@ -1,0 +1,9 @@
+{
+	"name": "capacit-adf",
+	"location": "brazilsouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "9f2a32b8-6ea8-4b3d-8446-afeae8e7caae",
+		"tenantId": "a447b9c2-a213-4ec1-8103-3ea69a516a59"
+	}
+}
