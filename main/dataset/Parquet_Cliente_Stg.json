@@ -1,0 +1,21 @@
+{
+	"name": "Parquet_Cliente_Stg",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "cliente_stg",
+				"folderPath": "cliente",
+				"fileSystem": "archivos-stg-petettabruno"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

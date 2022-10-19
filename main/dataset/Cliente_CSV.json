@@ -1,0 +1,28 @@
+{
+	"name": "Cliente_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Clientes.csv",
+				"fileSystem": "archivos-fuente-petettabruno"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "cod_cliente;Nombre;Apellido;id_localidad",
+				"type": "String"
+			}
+		]
+	}
+}
