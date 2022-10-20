@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "SourceSTGCliente"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_DimCliente",
+						"type": "DatasetReference"
+					},
+					"name": "ExistingDimCliente"
 				}
 			],
 			"sinks": [],
@@ -32,6 +39,16 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> SourceSTGCliente",
+				"source(output(",
+				"          Cod_Cliente as integer,",
+				"          Nombre_Cliente as string,",
+				"          Apellido_Cliente as string,",
+				"          Cod_Localidad as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ExistingDimCliente",
 				"SourceSTGCliente derive(SourceHash = sha2(256,cod_cliente,Nombre,Apellido,id_localidad)) ~> derivedColumnHash",
 				"derivedColumnHash exists(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     negate:false,",
