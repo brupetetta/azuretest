@@ -15,7 +15,13 @@
 			"sinks": [],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          cod_cliente as string,",
+				"          Nombre as string,",
+				"          Apellido as string,",
+				"          id_localidad as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> SourceSTGCliente"

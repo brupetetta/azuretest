@@ -16,6 +16,23 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "cod_cliente",
+				"type": "UTF8"
+			},
+			{
+				"name": "Nombre",
+				"type": "UTF8"
+			},
+			{
+				"name": "Apellido",
+				"type": "UTF8"
+			},
+			{
+				"name": "id_localidad",
+				"type": "UTF8"
+			}
+		]
 	}
 }
