@@ -382,7 +382,7 @@
 							"type": "String"
 						},
 						"Proceso_ID": {
-							"value": "@variables('Proceso_ID_actual')",
+							"value": "@variables('idProceso_Actual')",
 							"type": "String"
 						}
 					}
