@@ -27,8 +27,29 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "ForEach_Proceso",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup_Procesos",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"isSequential": true
+				}
 			}
 		],
+		"variables": {
+			"idProceso_Actual": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
