@@ -29,6 +29,12 @@
 				},
 				{
 					"name": "derivedColumnExistingHash"
+				},
+				{
+					"name": "LookupNuevosCambios"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -56,7 +62,20 @@
 				"derivedColumnHash, derivedColumnExistingHash exists(SourceHash == existingHash,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> ExistsSTGvsSQL",
-				"ExistingDimCliente derive(existingHash = sha2(256,Cod_Cliente,Nombre_Cliente,Apellido_Cliente,Cod_Localidad)) ~> derivedColumnExistingHash"
+				"ExistingDimCliente derive(existingHash = sha2(256,Cod_Cliente,Nombre_Cliente,Apellido_Cliente,Cod_Localidad)) ~> derivedColumnExistingHash",
+				"ExistsSTGvsSQL, derivedColumnExistingHash lookup(SourceSTGCliente@cod_cliente == ExistingDimCliente@Cod_Cliente,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupNuevosCambios",
+				"derivedColumnExistingHash select(mapColumn(",
+				"          ExistingCod_Cliente = Cod_Cliente,",
+				"          ExistingNombre_Cliente = Nombre_Cliente,",
+				"          ExistingApellido_Cliente = Apellido_Cliente,",
+				"          ExistingCod_Localidad = Cod_Localidad,",
+				"          existingHash",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1"
 			]
 		}
 	}
