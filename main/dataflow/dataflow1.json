@@ -1,5 +1,5 @@
 {
-	"name": "Dataflow_SCD_Cliente",
+	"name": "dataflow1",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -26,6 +26,9 @@
 				},
 				{
 					"name": "ExistsSTGvsSQL"
+				},
+				{
+					"name": "derivedColumnExistingHash"
 				}
 			],
 			"scriptLines": [
@@ -50,9 +53,10 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> ExistingDimCliente",
 				"SourceSTGCliente derive(SourceHash = sha2(256,cod_cliente,Nombre,Apellido,id_localidad)) ~> derivedColumnHash",
-				"derivedColumnHash exists(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
-				"     negate:false,",
-				"     broadcast: 'auto')~> ExistsSTGvsSQL"
+				"derivedColumnHash, derivedColumnExistingHash exists(SourceHash == existingHash,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> ExistsSTGvsSQL",
+				"ExistingDimCliente derive(existingHash = sha2(256,Cod_Cliente,Nombre_Cliente,Apellido_Cliente,Cod_Localidad)) ~> derivedColumnExistingHash"
 			]
 		}
 	}
