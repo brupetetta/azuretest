@@ -1,0 +1,35 @@
+{
+	"name": "AzureSqlCliente",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Cod_Cliente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Nombre_Cliente",
+				"type": "varchar"
+			},
+			{
+				"name": "Apellido_Cliente",
+				"type": "varchar"
+			},
+			{
+				"name": "Cod_Localidad",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Dim_Cliente"
+		}
+	}
+}

@@ -237,6 +237,10 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
+								"dataflow": {
+									"referenceName": "DataFlow_STG_FactVentasSTG",
+									"type": "DataFlowReference"
+								},
 								"compute": {
 									"coreCount": 8,
 									"computeType": "General"
