@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "Dataflow_SCD_Cliente",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -34,7 +34,10 @@
 					"name": "LookupNuevosCambios"
 				},
 				{
-					"name": "select1"
+					"name": "selectExisting"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -58,12 +61,13 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> ExistingDimCliente",
-				"SourceSTGCliente derive(SourceHash = sha2(256,cod_cliente,Nombre,Apellido,id_localidad)) ~> derivedColumnHash",
-				"derivedColumnHash, derivedColumnExistingHash exists(SourceHash == existingHash,",
+				"SourceSTGCliente derive(SourceHash = sha2(256,cod_cliente,Nombre,Apellido,id_localidad),",
+				"          cod_cliente_int = toInteger(cod_cliente)) ~> derivedColumnHash",
+				"derivedColumnHash, selectExisting exists(SourceHash == existingHash,",
 				"     negate:true,",
 				"     broadcast: 'auto')~> ExistsSTGvsSQL",
 				"ExistingDimCliente derive(existingHash = sha2(256,Cod_Cliente,Nombre_Cliente,Apellido_Cliente,Cod_Localidad)) ~> derivedColumnExistingHash",
-				"ExistsSTGvsSQL, derivedColumnExistingHash lookup(SourceSTGCliente@cod_cliente == ExistingDimCliente@Cod_Cliente,",
+				"ExistsSTGvsSQL, selectExisting lookup(cod_cliente_int == ExistingCod_Cliente,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LookupNuevosCambios",
@@ -75,7 +79,9 @@
 				"          existingHash",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1"
+				"     skipDuplicateMapOutputs: true) ~> selectExisting",
+				"LookupNuevosCambios split(ERROR_FUNCTION(''),",
+				"     disjoint: false) ~> split1@(, )"
 			]
 		}
 	}
