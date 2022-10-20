@@ -350,6 +350,47 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "SP_ActualizaEstado_Error",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "ForEach_Proceso",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[Sp_Actualiza_Estado_Proceso_Error]",
+					"storedProcedureParameters": {
+						"estado": {
+							"value": "3",
+							"type": "Int32"
+						},
+						"modulo": {
+							"value": "'Ventas'",
+							"type": "String"
+						},
+						"Proceso_ID": {
+							"value": "@variables('Proceso_ID_actual')",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"variables": {
