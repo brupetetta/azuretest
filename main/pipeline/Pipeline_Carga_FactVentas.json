@@ -56,6 +56,40 @@
 								"variableName": "idProceso_Actual",
 								"value": "string(@item().id_proceso)"
 							}
+						},
+						{
+							"name": "SP_ActualizaEstado_Iniciado",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[Sp_Actualiza_Estado_Proceso]",
+								"storedProcedureParameters": {
+									"estado": {
+										"value": "1",
+										"type": "Int32"
+									},
+									"modulo": {
+										"value": "@item().modulo",
+										"type": "String"
+									},
+									"Proceso_ID": {
+										"value": "@item().id_proceso",
+										"type": "Int32"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabase1",
+								"type": "LinkedServiceReference"
+							}
 						}
 					]
 				}
