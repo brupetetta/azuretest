@@ -38,6 +38,9 @@
 				},
 				{
 					"name": "ConditionalSplitEsNuevo"
+				},
+				{
+					"name": "AlterRowInsert"
 				}
 			],
 			"scriptLines": [
@@ -81,7 +84,8 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectExisting",
 				"LookupNuevosCambios split(isNull(ExistingCod_Cliente),",
-				"     disjoint: false) ~> ConditionalSplitEsNuevo@(EsNuevo, EsModificado)"
+				"     disjoint: false) ~> ConditionalSplitEsNuevo@(EsNuevo, EsModificado)",
+				"ConditionalSplitEsNuevo@EsNuevo alterRow(insertIf(1==1)) ~> AlterRowInsert"
 			]
 		}
 	}
