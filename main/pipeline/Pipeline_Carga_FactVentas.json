@@ -41,6 +41,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup_Procesos').output.value",
+						"type": "Expression"
+					},
 					"isSequential": true
 				}
 			}
