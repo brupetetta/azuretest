@@ -55,6 +55,7 @@
 				"LookupCliente sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
+				"     partitionFileNames:['factventas_stg'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
