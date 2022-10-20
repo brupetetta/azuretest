@@ -1,0 +1,42 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "cod_tiempo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cod_vendedor",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cod_cliente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cod_producto",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cantidad",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Fact_Ventas"
+		}
+	}
+}
