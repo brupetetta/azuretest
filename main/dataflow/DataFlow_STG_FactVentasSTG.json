@@ -19,7 +19,15 @@
 					"name": "SourceDimCliente"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet_STG_Ventas",
+						"type": "DatasetReference"
+					},
+					"name": "SinkStgFactVentas"
+				}
+			],
 			"transformations": [
 				{
 					"name": "LookupCliente"
@@ -43,7 +51,15 @@
 				"SourceParquetVentas, SourceDimCliente lookup(ERROR_FUNCTION('') == Cod_Cliente,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> LookupCliente"
+				"     broadcast: 'auto')~> LookupCliente",
+				"LookupCliente sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkStgFactVentas"
 			]
 		}
 	}
