@@ -60,7 +60,14 @@
 						{
 							"name": "SP_ActualizaEstado_Iniciado",
 							"type": "SqlServerStoredProcedure",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "SetVariable_ProcesoActual",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
