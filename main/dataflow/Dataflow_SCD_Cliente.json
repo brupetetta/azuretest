@@ -1,0 +1,25 @@
+{
+	"name": "Dataflow_SCD_Cliente",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Parquet_Cliente_Stg",
+						"type": "DatasetReference"
+					},
+					"name": "SourceSTGCliente"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> SourceSTGCliente"
+			]
+		}
+	}
+}
