@@ -97,7 +97,7 @@
 				"LookupNuevosCambios split(isNull(ExistingCod_Cliente),",
 				"     disjoint: false) ~> ConditionalSplitEsNuevo@(EsNuevo, EsModificado)",
 				"ConditionalSplitEsNuevo@EsNuevo alterRow(insertIf(1==1)) ~> AlterRowInsert",
-				"ConditionalSplitEsNuevo@EsModificado alterRow() ~> alterRowUpdate",
+				"ConditionalSplitEsNuevo@EsModificado alterRow(updateIf(1==1)) ~> alterRowUpdate",
 				"alterRowUpdate sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
