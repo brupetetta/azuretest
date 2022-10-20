@@ -37,7 +37,7 @@
 					"name": "selectExisting"
 				},
 				{
-					"name": "split1"
+					"name": "ConditionalSplitEsNuevo"
 				}
 			],
 			"scriptLines": [
@@ -80,8 +80,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> selectExisting",
-				"LookupNuevosCambios split(ERROR_FUNCTION(''),",
-				"     disjoint: false) ~> split1@(, )"
+				"LookupNuevosCambios split(isNull(ExistingCod_Cliente),",
+				"     disjoint: false) ~> ConditionalSplitEsNuevo@(EsNuevo, EsModificado)"
 			]
 		}
 	}
