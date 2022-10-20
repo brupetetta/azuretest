@@ -38,6 +38,56 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "cod_cliente",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "cod_cliente",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Nombre",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Nombre",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Apellido",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Apellido",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "id_localidad",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "id_localidad",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
