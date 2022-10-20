@@ -19,7 +19,15 @@
 					"name": "ExistingDimCliente"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_DimCliente",
+						"type": "DatasetReference"
+					},
+					"name": "sinkDimClienteCambios"
+				}
+			],
 			"transformations": [
 				{
 					"name": "derivedColumnHash"
@@ -41,6 +49,9 @@
 				},
 				{
 					"name": "AlterRowInsert"
+				},
+				{
+					"name": "alterRowUpdate"
 				}
 			],
 			"scriptLines": [
@@ -85,7 +96,25 @@
 				"     skipDuplicateMapOutputs: true) ~> selectExisting",
 				"LookupNuevosCambios split(isNull(ExistingCod_Cliente),",
 				"     disjoint: false) ~> ConditionalSplitEsNuevo@(EsNuevo, EsModificado)",
-				"ConditionalSplitEsNuevo@EsNuevo alterRow(insertIf(1==1)) ~> AlterRowInsert"
+				"ConditionalSplitEsNuevo@EsNuevo alterRow(insertIf(1==1)) ~> AlterRowInsert",
+				"ConditionalSplitEsNuevo@EsModificado alterRow() ~> alterRowUpdate",
+				"alterRowUpdate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Cod_Cliente as integer,",
+				"          Nombre_Cliente as string,",
+				"          Apellido_Cliente as string,",
+				"          Cod_Localidad as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['cod_cliente'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkDimClienteCambios"
 			]
 		}
 	}
