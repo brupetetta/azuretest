@@ -13,7 +13,14 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumnHash"
+				},
+				{
+					"name": "ExistsSTGvsSQL"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          cod_cliente as string,",
@@ -24,7 +31,11 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> SourceSTGCliente"
+				"     format: 'parquet') ~> SourceSTGCliente",
+				"SourceSTGCliente derive(SourceHash = sha2(256,cod_cliente,Nombre,Apellido,id_localidad)) ~> derivedColumnHash",
+				"derivedColumnHash exists(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     negate:false,",
+				"     broadcast: 'auto')~> ExistsSTGvsSQL"
 			]
 		}
 	}
