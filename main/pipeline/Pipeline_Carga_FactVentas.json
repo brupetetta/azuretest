@@ -45,7 +45,19 @@
 						"value": "@activity('Lookup_Procesos').output.value",
 						"type": "Expression"
 					},
-					"isSequential": true
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "SetVariable_ProcesoActual",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "idProceso_Actual",
+								"value": "string(@item().id_proceso)"
+							}
+						}
+					]
 				}
 			}
 		],
