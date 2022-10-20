@@ -97,6 +97,125 @@
 								"referenceName": "AzureSqlDatabase1",
 								"type": "LinkedServiceReference"
 							}
+						},
+						{
+							"name": "CopyData_STG_Ventas",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "SP_ActualizaEstado_Iniciado",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "cod_tiempo",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "cod_tiempo",
+												"type": "Int32",
+												"physicalType": "INT_32"
+											}
+										},
+										{
+											"source": {
+												"name": "cod_vendedor",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "cod_vendedor",
+												"type": "Int32",
+												"physicalType": "INT_32"
+											}
+										},
+										{
+											"source": {
+												"name": "cod_cliente",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "cod_cliente",
+												"type": "Int32",
+												"physicalType": "INT_32"
+											}
+										},
+										{
+											"source": {
+												"name": "cod_producto",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "cod_producto",
+												"type": "Int32",
+												"physicalType": "INT_32"
+											}
+										},
+										{
+											"source": {
+												"name": "cantidad",
+												"type": "Int32",
+												"physicalType": "int"
+											},
+											"sink": {
+												"name": "cantidad",
+												"type": "Int32",
+												"physicalType": "INT_32"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "AzureSql_Ventas",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Parquet_STG_Ventas",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}
