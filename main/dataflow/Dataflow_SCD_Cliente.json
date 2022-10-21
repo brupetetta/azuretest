@@ -26,6 +26,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sinkDimClienteCambios"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable_DimCliente",
+						"type": "DatasetReference"
+					},
+					"name": "sinkDimCliente"
 				}
 			],
 			"transformations": [
@@ -114,7 +121,23 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sinkDimClienteCambios"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkDimClienteCambios",
+				"AlterRowInsert sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Cod_Cliente as integer,",
+				"          Nombre_Cliente as string,",
+				"          Apellido_Cliente as string,",
+				"          Cod_Localidad as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sinkDimCliente"
 			]
 		}
 	}
